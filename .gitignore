@@ -1,0 +1,15 @@
+# Ignore Visual Studio specific folders and files
+.vs/
+*.user
+*.suo
+DiifFileofEachVideo/
+
+# Ignore build results
+bin/
+obj/
+
+# Ignore test HTTP files
+*.http
+
+# Ignore local development config
+appsettings.Development.json
