@@ -39,13 +39,23 @@ namespace DbOprationWthEFCoreApp.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetCurrenciesByID([FromRoute]  int id  )
         {
 
             var result = await _appDbContext.Currencies.FindAsync(id);
             return Ok(result);
         }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetCurrenciesByName([FromRoute] string name)
+        {
+
+            var result = await _appDbContext.Currencies.Where(x => x.Title == name).FirstOrDefaultAsync();
+            return Ok(result);
+        }
+
+
 
 
     }
