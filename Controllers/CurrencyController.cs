@@ -1,5 +1,6 @@
 ﻿using DbOprationWthEFCoreApp.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DbOprationWthEFCoreApp.Controllers
 {
@@ -17,9 +18,24 @@ namespace DbOprationWthEFCoreApp.Controllers
 
         // ✅ Return IActionResult and use Ok() properly
         [HttpGet("")]
-        public IActionResult GetAllCurrencies()
+        public  async Task<IActionResult>  GetAllCurrencies()
         {
-            var result = _appDbContext.Currencies.ToList();
+
+            // var result = _appDbContext.Currencies.ToList();// tolist method linq ka hi part hai 
+            // return Ok(result);
+
+            // Likq ki kisi bhi query ko 2 form me likh sakte  hai 
+            // var result = (from currencies in _appDbContext.Currencies
+            //              select currencies).ToList();
+
+           // var result = await _appDbContext.Currencies.ToListAsync();
+
+            var result = await (from currencies in _appDbContext.Currencies
+                         select currencies).ToListAsync();
+
+
+
+
             return Ok(result);
         }
     }
