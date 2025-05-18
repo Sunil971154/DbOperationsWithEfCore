@@ -1,0 +1,57 @@
+commit 19b0061402222a5a35962a0556ce87e46539e5b3
+Author: Sunil-kumar <sunilku.951975@gmail.com>
+Date:   Sun May 18 16:33:03 2025 +0530
+
+    3 till v-6 commit fresh project
+
+diff --git a/Controllers/CurrencyController.cs b/Controllers/CurrencyController.cs
+index 6f48d7b..9192f0b 100644
+--- a/Controllers/CurrencyController.cs
++++ b/Controllers/CurrencyController.cs
+@@ -1,5 +1,6 @@
+ ﻿using DbOprationWthEFCoreApp.Data;
+ using Microsoft.AspNetCore.Mvc;
++using Microsoft.EntityFrameworkCore;
+ 
+ namespace DbOprationWthEFCoreApp.Controllers
+ {
+@@ -17,9 +18,24 @@ namespace DbOprationWthEFCoreApp.Controllers
+ 
+         // ✅ Return IActionResult and use Ok() properly
+         [HttpGet("")]
+-        public IActionResult GetAllCurrencies()
++        public  async Task<IActionResult>  GetAllCurrencies()
+         {
+-            var result = _appDbContext.Currencies.ToList();
++
++            // var result = _appDbContext.Currencies.ToList();// tolist method linq ka hi part hai 
++            // return Ok(result);
++
++            // Likq ki kisi bhi query ko 2 form me likh sakte  hai 
++            // var result = (from currencies in _appDbContext.Currencies
++            //              select currencies).ToList();
++
++           // var result = await _appDbContext.Currencies.ToListAsync();
++
++            var result = await (from currencies in _appDbContext.Currencies
++                         select currencies).ToListAsync();
++
++
++
++
+             return Ok(result);
+         }
+     }
+diff --git a/Data/AppDbContext.cs b/Data/AppDbContext.cs
+index 6784aad..4ea029f 100644
+--- a/Data/AppDbContext.cs
++++ b/Data/AppDbContext.cs
+@@ -9,7 +9,7 @@ namespace DbOprationWthEFCoreApp.Data
+ 
+         public AppDbContext( DbContextOptions<AppDbContext> options  ) : base(options)
+         {
+-
++            
+         }
+ 
+ 
